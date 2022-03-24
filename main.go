@@ -28,6 +28,21 @@ func SumGeneric[K comparable, V int64 | float64](m map[K]V) V {
 	return s
 }
 
+// Type constraint: interface, it's used to allow any type which implements the
+// interface (in Go interfaces are implemented implicitly, unlike many other languages,
+// where they have to be explicitly specified).
+type Number interface {
+	int64 | float64
+}
+
+func SumNumbers[K comparable, V Number](m map[K]V) V {
+	var s V
+	for _, v := range m {
+		s = +v
+	}
+	return s
+}
+
 func main() {
 
 	// Initialize a map for the integer values
@@ -50,7 +65,15 @@ func main() {
 		SumGeneric[string, int64](ints),
 		SumGeneric[string, float64](floats))
 
+	// The function can also be called without explicit type params. This is only possible
+	// when the compiler is able to infer the type arguments from the types of function arguments.
 	fmt.Printf("Generic sums:                           %v and %v\n",
 		SumGeneric(ints),
 		SumGeneric(floats))
+
+	fmt.Printf("Generic Sums with Constraint:           %v and %v\n",
+		SumNumbers(ints),
+		SumNumbers(floats))
+
+	j()
 }
