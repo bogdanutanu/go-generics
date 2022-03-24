@@ -42,11 +42,15 @@ func main() {
 		"second": 26.99,
 	}
 
-	fmt.Printf("Non-Generic Sums: %v and %v\n",
+	fmt.Printf("Non-Generic Sums:                       %v and %v\n",
 		SumInts(ints),
 		SumFloats(floats))
 
-	fmt.Printf("Generic sums: %v and %v\n",
+	fmt.Printf("Generic sums with explicit type params: %v and %v\n",
+		SumGeneric[string, int64](ints),
+		SumGeneric[string, float64](floats))
+
+	fmt.Printf("Generic sums:                           %v and %v\n",
 		SumGeneric(ints),
 		SumGeneric(floats))
 }
