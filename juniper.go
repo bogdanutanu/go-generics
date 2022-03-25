@@ -16,4 +16,7 @@ func j() {
 
 	fmt.Printf("Lenght: %d\n", l.Len())
 	fmt.Printf("Front: %s\n", l.Front().Value)
+	fmt.Printf("Back: %s\n", l.Back().Value)
+
+	// l.PushBack(5)
 }

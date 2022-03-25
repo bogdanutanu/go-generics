@@ -20,7 +20,7 @@ func SumFloats(m map[string]float64) float64 {
 	return s
 }
 
-func SumGeneric[K comparable, V int64 | float64](m map[K]V) V {
+func SumGeneric[K comparable, V int64 | float64 | float32](m map[K]V) V {
 	var s V
 	for _, v := range m {
 		s += v
@@ -38,7 +38,7 @@ type Number interface {
 func SumNumbers[K comparable, V Number](m map[K]V) V {
 	var s V
 	for _, v := range m {
-		s = +v
+		s += v
 	}
 	return s
 }
@@ -57,6 +57,11 @@ func main() {
 		"second": 26.99,
 	}
 
+	floats32 := map[string]float32{
+		"first":  35.98,
+		"second": 26.99,
+	}
+
 	fmt.Printf("Non-Generic Sums:                       %v and %v\n",
 		SumInts(ints),
 		SumFloats(floats))
@@ -67,9 +72,10 @@ func main() {
 
 	// The function can also be called without explicit type params. This is only possible
 	// when the compiler is able to infer the type arguments from the types of function arguments.
-	fmt.Printf("Generic sums:                           %v and %v\n",
+	fmt.Printf("Generic sums:                           %v and %v and %v\n",
 		SumGeneric(ints),
-		SumGeneric(floats))
+		SumGeneric(floats),
+		SumGeneric(floats32))
 
 	fmt.Printf("Generic Sums with Constraint:           %v and %v\n",
 		SumNumbers(ints),
